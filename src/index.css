@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-serif: 'Crimson Pro', 'Georgia', serif;
+}
+
+:root {
+  --wn-bg: #faf7f2;
+  --wn-surface: #ffffff;
+  --wn-surface-2: #f3eee6;
+  --wn-border: #e6ddcf;
+  --wn-text: #2a241b;
+  --wn-muted: #6b6356;
+  --wn-accent: #b45309;
+  --wn-accent-soft: #fff7ed;
+  --wn-shadow: 0 10px 40px -20px rgba(42, 36, 27, 0.35);
+}
+
+.dark {
+  --wn-bg: #141210;
+  --wn-surface: #1c1a16;
+  --wn-surface-2: #252119;
+  --wn-border: #353028;
+  --wn-text: #f3eee6;
+  --wn-muted: #a39a8c;
+  --wn-accent: #f59e0b;
+  --wn-accent-soft: #3f2e12;
+  --wn-shadow: 0 16px 50px -24px rgba(0, 0, 0, 0.75);
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--font-sans);
+  background: var(--wn-bg);
+  color: var(--wn-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+/* Editor content helpers */
+.prose-editor {
+  font-family: var(--font-serif);
+  line-height: 1.75;
+}
+
+.prose-editor::placeholder {
+  color: var(--wn-muted);
+  opacity: 0.7;
+}
