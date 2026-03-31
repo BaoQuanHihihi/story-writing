@@ -35,7 +35,7 @@ export function Modal({
       <button
         type="button"
         className="absolute inset-0 bg-black/35 backdrop-blur-[2px]"
-        aria-label="Close dialog"
+        aria-label="Đóng hộp thoại"
         onClick={onClose}
       />
       <div
@@ -56,7 +56,7 @@ export function Modal({
             type="button"
             className="rounded-lg p-1.5 text-[var(--wn-muted)] hover:bg-[var(--wn-surface-2)]"
             onClick={onClose}
-            aria-label="Close"
+            aria-label="Đóng"
           >
             ✕
           </button>

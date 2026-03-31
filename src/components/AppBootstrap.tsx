@@ -19,7 +19,7 @@ export function AppBootstrap({ children }: { children: ReactNode }) {
   if (!ready) {
     return (
       <div className="min-h-dvh flex items-center justify-center text-[var(--wn-muted)] text-sm">
-        Opening your desk…
+        Đang mở góc làm việc…
       </div>
     )
   }

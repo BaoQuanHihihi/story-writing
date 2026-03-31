@@ -41,7 +41,7 @@ export async function addChapter(storyId: string, title: string): Promise<Chapte
   const ch: Chapter = {
     id: nanoid(),
     storyId,
-    title: title.trim() || `Chapter ${existing.length + 1}`,
+    title: title.trim() || `Chương ${existing.length + 1}`,
     content,
     order: maxOrder + 1,
     status: 'draft',
@@ -61,7 +61,7 @@ export async function renameChapter(chapterId: string, title: string) {
   const now = Date.now()
   const ch = await db.chapters.get(chapterId)
   if (!ch) return
-  await db.chapters.update(chapterId, { title: title.trim() || 'Untitled chapter', updatedAt: now })
+  await db.chapters.update(chapterId, { title: title.trim() || 'Chương chưa đặt tên', updatedAt: now })
   await db.stories.update(ch.storyId, { updatedAt: now })
 }
 

@@ -113,14 +113,14 @@ export function WorkspacePage() {
   }
 
   const onAddChapter = useCallback(async () => {
-    const ch = await addChapter(storyId, `Chapter ${chapters.length + 1}`)
+    const ch = await addChapter(storyId, `Chương ${chapters.length + 1}`)
     await reload()
     await selectChapter(ch.id)
     setSection('chapters')
   }, [chapters.length, reload, selectChapter, storyId])
 
   const onTrashChapter = async (id: string) => {
-    if (!confirm('Move this chapter to trash?')) return
+    if (!confirm('Chuyển chương này vào thùng rác?')) return
     await editorRef.current?.saveNow()
     await softDeleteChapter(id)
     await reload()
@@ -160,9 +160,9 @@ export function WorkspacePage() {
   if (!ready) {
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center gap-3 p-6 text-sm text-[var(--wn-muted)]">
-        <p>Opening your story…</p>
+        <p>Đang mở truyện…</p>
         <Link className="text-[var(--wn-accent)] underline" to="/">
-          Back to library
+          Về thư viện
         </Link>
       </div>
     )
@@ -171,9 +171,9 @@ export function WorkspacePage() {
   if (!story) {
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center gap-3 p-6 text-sm text-[var(--wn-muted)]">
-        <p>We couldn’t find that story on this device.</p>
+        <p>Không tìm thấy truyện đó trên thiết bị này.</p>
         <Link className="text-[var(--wn-accent)] underline" to="/">
-          Back to library
+          Về thư viện
         </Link>
       </div>
     )
@@ -183,18 +183,18 @@ export function WorkspacePage() {
     <div className="flex min-h-dvh flex-col bg-[var(--wn-bg)] text-[var(--wn-text)]">
       <header className="flex flex-wrap items-center gap-2 border-b border-[var(--wn-border)] bg-[var(--wn-surface)] px-3 py-2 sm:px-4">
         <Link to="/" className="rounded-lg px-2 py-1 text-sm font-medium text-[var(--wn-muted)] hover:bg-[var(--wn-surface-2)]">
-          ← Library
+          ← Thư viện
         </Link>
         <span className="hidden text-[var(--wn-border)] sm:inline">|</span>
         <span className="hidden text-xs text-[var(--wn-muted)] sm:inline">
           {BRAND.name} · <span className="text-[var(--wn-text)]">{story.title}</span>
         </span>
-        <span className="ml-auto hidden text-[11px] text-[var(--wn-muted)] lg:inline">Stored locally on this device</span>
+        <span className="ml-auto hidden text-[11px] text-[var(--wn-muted)] lg:inline">Lưu cục bộ trên thiết bị</span>
         <Button variant="ghost" className="!px-2 !py-1 text-xs lg:hidden" type="button" onClick={() => setMobileShelf(true)}>
-          Shelf
+          Kệ
         </Button>
         <Button variant="ghost" className="!px-2 !py-1 text-xs lg:hidden" type="button" onClick={() => setMobileRight(true)}>
-          Tools
+          Công cụ
         </Button>
         <Button
           variant="secondary"
@@ -205,10 +205,10 @@ export function WorkspacePage() {
             if (data) downloadJson(`${story.title}-writenest.json`, data)
           }}
         >
-          Export
+          Xuất
         </Button>
         <Button variant="ghost" className="!px-2 !py-1 text-xs" type="button" onClick={() => setSettingsOpen(true)}>
-          Settings
+          Cài đặt
         </Button>
       </header>
 
@@ -263,7 +263,7 @@ export function WorkspacePage() {
               />
             ) : (
               <div className="flex flex-1 items-center justify-center p-8 text-sm text-[var(--wn-muted)]">
-                No chapters in this story yet.
+                Truyện này chưa có chương nào.
               </div>
             )}
           </main>
@@ -290,7 +290,7 @@ export function WorkspacePage() {
       </div>
 
       {mobileRight ? (
-        <button type="button" aria-label="Close tools" className="fixed inset-0 z-20 bg-black/30 lg:hidden" onClick={() => setMobileRight(false)} />
+        <button type="button" aria-label="Đóng công cụ" className="fixed inset-0 z-20 bg-black/30 lg:hidden" onClick={() => setMobileRight(false)} />
       ) : null}
 
       <SearchChaptersModal
@@ -304,23 +304,23 @@ export function WorkspacePage() {
 
       {helpOpen ? (
         <div className="fixed bottom-4 right-4 z-40 max-w-sm rounded-2xl border border-[var(--wn-border)] bg-[var(--wn-surface)] p-4 text-xs shadow-lg">
-          <p className="font-semibold text-[var(--wn-text)]">Shortcuts</p>
+          <p className="font-semibold text-[var(--wn-text)]">Phím tắt</p>
           <ul className="mt-2 space-y-1 text-[var(--wn-muted)]">
             <li>
-              <kbd className="rounded bg-[var(--wn-surface-2)] px-1">⌘/Ctrl K</kbd> Search chapters
+              <kbd className="rounded bg-[var(--wn-surface-2)] px-1">⌘/Ctrl K</kbd> Tìm chương
             </li>
             <li>
-              <kbd className="rounded bg-[var(--wn-surface-2)] px-1">⌘/Ctrl ⇧ N</kbd> New chapter
+              <kbd className="rounded bg-[var(--wn-surface-2)] px-1">⌘/Ctrl ⇧ N</kbd> Chương mới
             </li>
             <li>
-              <kbd className="rounded bg-[var(--wn-surface-2)] px-1">⌘/Ctrl .</kbd> Focus mode
+              <kbd className="rounded bg-[var(--wn-surface-2)] px-1">⌘/Ctrl .</kbd> Chế độ tập trung
             </li>
             <li>
-              <kbd className="rounded bg-[var(--wn-surface-2)] px-1">?</kbd> Toggle this panel
+              <kbd className="rounded bg-[var(--wn-surface-2)] px-1">?</kbd> Bật/tắt bảng này
             </li>
           </ul>
           <button type="button" className="mt-3 text-[var(--wn-accent)] underline" onClick={() => setHelpOpen(false)}>
-            Close
+            Đóng
           </button>
         </div>
       ) : null}

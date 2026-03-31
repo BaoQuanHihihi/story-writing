@@ -185,7 +185,7 @@ export const EditorPane = forwardRef<
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="min-w-0 flex-1 space-y-2">
               <label className="sr-only" htmlFor="story-title-input">
-                Story title
+                Tiêu đề truyện
               </label>
               <input
                 id="story-title-input"
@@ -194,9 +194,9 @@ export const EditorPane = forwardRef<
                 onChange={(e) => onStoryTitleChange(e.target.value)}
               />
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs uppercase tracking-wide text-[var(--wn-muted)]">Chapter</span>
+                <span className="text-xs uppercase tracking-wide text-[var(--wn-muted)]">Chương</span>
                 <input
-                  aria-label="Chapter title"
+                  aria-label="Tiêu đề chương"
                   className="min-w-[10rem] flex-1 rounded-lg border border-transparent bg-[var(--wn-surface-2)] px-2 py-1 text-sm text-[var(--wn-text)] outline-none focus:border-[var(--wn-border)]"
                   value={chapter.title}
                   onChange={(e) => onChapterTitleChange(e.target.value)}
@@ -205,31 +205,31 @@ export const EditorPane = forwardRef<
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-xs text-[var(--wn-muted)]" aria-live="polite">
-                {saveState === 'saving' ? 'Saving…' : formatSaveAge(lastSaveAt)}
+                {saveState === 'saving' ? 'Đang lưu…' : formatSaveAge(lastSaveAt)}
               </span>
               <Button variant="secondary" className="!px-3 !py-1.5 text-xs" type="button" onClick={onExportMd}>
-                Export .md
+                Xuất .md
               </Button>
               <Button variant="secondary" className="!px-3 !py-1.5 text-xs" type="button" onClick={onToggleFocus}>
-                {focusMode ? 'Exit focus' : 'Focus'}
+                {focusMode ? 'Thoát tập trung' : 'Tập trung'}
               </Button>
             </div>
           </div>
           <div className="flex flex-wrap gap-3 text-xs text-[var(--wn-muted)]">
             <span>
-              Chapter: <strong className="text-[var(--wn-text)] tabular-nums">{wc}</strong> words
+              Chương: <strong className="text-[var(--wn-text)] tabular-nums">{wc}</strong> chữ
             </span>
             <span>
-              Story: <strong className="text-[var(--wn-text)] tabular-nums">{totalStoryWords}</strong> words
+              Truyện: <strong className="text-[var(--wn-text)] tabular-nums">{totalStoryWords}</strong> chữ
             </span>
             <span>
-              Reading ~<strong className="text-[var(--wn-text)] tabular-nums">{readMin}</strong> min
+              Đọc ~<strong className="text-[var(--wn-text)] tabular-nums">{readMin}</strong> phút
             </span>
             {dailyGoal > 0 ? (
               <span>
-                Today:{' '}
+                Hôm nay:{' '}
                 <strong className="text-[var(--wn-text)] tabular-nums">{todayProgress}</strong> /{' '}
-                <span className="tabular-nums">{dailyGoal}</span> words
+                <span className="tabular-nums">{dailyGoal}</span> chữ
               </span>
             ) : null}
           </div>
@@ -239,16 +239,16 @@ export const EditorPane = forwardRef<
       <div className="flex min-h-0 flex-1 flex-col px-4 py-4 sm:px-6">
         <div className="mx-auto flex w-full min-h-0 flex-1 flex-col" style={{ maxWidth: maxW }}>
           <div className="mb-2 flex flex-wrap gap-2">
-            <FormatBtn label="Bold" onClick={() => wrapSelection('**', '**')} />
-            <FormatBtn label="Italic" onClick={() => wrapSelection('*', '*')} />
-            <FormatBtn label="Heading" onClick={() => insertLinePrefix('## ')} />
-            <FormatBtn label="Scene break" onClick={insertSceneBreak} />
+            <FormatBtn label="Đậm" onClick={() => wrapSelection('**', '**')} />
+            <FormatBtn label="Nghiêng" onClick={() => wrapSelection('*', '*')} />
+            <FormatBtn label="Tiêu đề" onClick={() => insertLinePrefix('## ')} />
+            <FormatBtn label="Ngắt cảnh" onClick={insertSceneBreak} />
           </div>
           <textarea
             ref={taRef}
             className="prose-editor min-h-[50dvh] w-full flex-1 resize-none rounded-2xl border border-[var(--wn-border)] bg-[var(--wn-surface)] p-4 sm:p-6 text-[length:var(--fs)] leading-relaxed text-[var(--wn-text)] outline-none focus:ring-2 focus:ring-[var(--wn-accent)]/25"
             style={{ ['--fs' as string]: `${settings.fontSize}px` }}
-            placeholder="Write slowly if you like. Autosave is watching."
+            placeholder="Viết thong thả cũng được — bản nháp sẽ được lưu tự động."
             value={content}
             spellCheck
             onChange={(e) => {

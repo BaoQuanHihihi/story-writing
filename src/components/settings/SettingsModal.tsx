@@ -33,13 +33,13 @@ export function SettingsModal({ open, onClose }: { open: boolean; onClose: () =>
     <Modal
       open={open}
       onClose={onClose}
-      title="Settings"
-      ariaDescription="Theme, editor, autosave, and writing preferences. Stored locally on this device."
+      title="Cài đặt"
+      ariaDescription="Giao diện, trình soạn, tự động lưu và tùy chọn viết. Lưu cục bộ trên thiết bị này."
       className="max-w-xl"
       footer={
         <>
           <Button variant="secondary" onClick={onClose}>
-            Cancel
+            Hủy
           </Button>
           <Button
             onClick={() => {
@@ -47,25 +47,25 @@ export function SettingsModal({ open, onClose }: { open: boolean; onClose: () =>
               onClose()
             }}
           >
-            Save
+            Lưu
           </Button>
         </>
       }
     >
       <div className="space-y-5 text-sm">
-        <Field label="Theme">
+        <Field label="Giao diện">
           <select
             className="wn-select"
             value={local.theme}
             onChange={(e) => setLocal({ ...local, theme: e.target.value as AppSettings['theme'] })}
           >
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-            <option value="system">System</option>
+            <option value="light">Sáng</option>
+            <option value="dark">Tối</option>
+            <option value="system">Theo hệ thống</option>
           </select>
         </Field>
 
-        <Field label="Editor font size">
+        <Field label="Cỡ chữ trình soạn">
           <input
             type="range"
             min={16}
@@ -79,7 +79,7 @@ export function SettingsModal({ open, onClose }: { open: boolean; onClose: () =>
           <span className="text-[var(--wn-muted)] tabular-nums">{local.fontSize}px</span>
         </Field>
 
-        <Field label="Editor width">
+        <Field label="Độ rộng vùng viết">
           <select
             className="wn-select"
             value={local.editorMaxWidth}
@@ -87,37 +87,37 @@ export function SettingsModal({ open, onClose }: { open: boolean; onClose: () =>
               setLocal({ ...local, editorMaxWidth: e.target.value as AppSettings['editorMaxWidth'] })
             }
           >
-            <option value="narrow">Narrow</option>
-            <option value="comfortable">Comfortable</option>
-            <option value="wide">Wide</option>
+            <option value="narrow">Hẹp</option>
+            <option value="comfortable">Vừa</option>
+            <option value="wide">Rộng</option>
           </select>
         </Field>
 
-        <Field label="Autosave delay after typing stops">
+        <Field label="Độ trễ tự động lưu sau khi ngừng gõ">
           <select
             className="wn-select"
             value={local.autosaveDebounceMs}
             onChange={(e) => setLocal({ ...local, autosaveDebounceMs: Number(e.target.value) })}
           >
-            <option value={500}>500 ms (snappy)</option>
-            <option value={900}>900 ms (balanced)</option>
-            <option value={1500}>1.5 s (relaxed)</option>
+            <option value={500}>500 ms (nhanh)</option>
+            <option value={900}>900 ms (cân bằng)</option>
+            <option value={1500}>1,5 giây (thư thả)</option>
           </select>
         </Field>
 
-        <Field label="Periodic checkpoints while writing">
+        <Field label="Tạo bản chụp định kỳ khi đang viết">
           <select
             className="wn-select"
             value={local.periodicSnapshotMs}
             onChange={(e) => setLocal({ ...local, periodicSnapshotMs: Number(e.target.value) })}
           >
-            <option value={120000}>Every 2 minutes</option>
-            <option value={300000}>Every 5 minutes</option>
-            <option value={600000}>Every 10 minutes</option>
+            <option value={120000}>Mỗi 2 phút</option>
+            <option value={300000}>Mỗi 5 phút</option>
+            <option value={600000}>Mỗi 10 phút</option>
           </select>
         </Field>
 
-        <Field label="Daily word goal">
+        <Field label="Mục tiêu chữ mỗi ngày">
           <input
             type="number"
             min={0}
@@ -129,26 +129,24 @@ export function SettingsModal({ open, onClose }: { open: boolean; onClose: () =>
         </Field>
 
         <div className="rounded-xl border border-[var(--wn-border)] bg-[var(--wn-surface-2)] p-3">
-          <p className="font-medium text-[var(--wn-text)]">Library snapshot</p>
+          <p className="font-medium text-[var(--wn-text)]">Tổng quan thư viện</p>
           <p className="mt-1 text-[var(--wn-muted)]">
             {totals ? (
               <>
-                <span className="text-[var(--wn-text)] font-medium tabular-nums">{totals.stories}</span>{' '}
-                stories ·{' '}
+                <span className="text-[var(--wn-text)] font-medium tabular-nums">{totals.stories}</span> truyện ·{' '}
                 <span className="text-[var(--wn-text)] font-medium tabular-nums">
-                  {totals.words.toLocaleString()}
+                  {totals.words.toLocaleString('vi-VN')}
                 </span>{' '}
-                words in active chapters
+                chữ (các chương đang hiệu lực)
               </>
             ) : (
-              'Calculating…'
+              'Đang tính…'
             )}
           </p>
           <p className="mt-3 text-xs text-[var(--wn-muted)]">
-            Today’s writing progress:{' '}
-            <span className="tabular-nums font-medium text-[var(--wn-text)]">{todayWords}</span> words toward a
-            daily goal of{' '}
-            <span className="tabular-nums font-medium text-[var(--wn-text)]">{local.dailyWordGoal}</span>.
+            Tiến độ hôm nay:{' '}
+            <span className="tabular-nums font-medium text-[var(--wn-text)]">{todayWords}</span> chữ / mục tiêu{' '}
+            <span className="tabular-nums font-medium text-[var(--wn-text)]">{local.dailyWordGoal}</span> chữ.
           </p>
         </div>
       </div>

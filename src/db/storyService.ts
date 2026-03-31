@@ -72,9 +72,9 @@ export async function createStory(input: {
   const chapterId = nanoid()
   const story: Story = {
     id: storyId,
-    title: input.title.trim() || 'Untitled story',
+    title: input.title.trim() || 'Truyện chưa đặt tên',
     description: input.description.trim(),
-    genre: input.genre.trim() || 'General',
+    genre: input.genre.trim() || 'Chung',
     status: input.status,
     createdAt: now,
     updatedAt: now,
@@ -82,11 +82,11 @@ export async function createStory(input: {
     lastChapterId: chapterId,
     coverColor: input.coverColor,
   }
-  const content = `# ${story.title}\n\nStart writing here.`
+  const content = `# ${story.title}\n\nBắt đầu viết tại đây.`
   const chapter: Chapter = {
     id: chapterId,
     storyId,
-    title: 'Chapter 1',
+    title: 'Chương 1',
     content,
     order: 0,
     status: 'draft',
@@ -170,7 +170,7 @@ export async function duplicateStory(storyId: string): Promise<string | null> {
       const newStory: Story = {
         ...orig,
         id: newStoryId,
-        title: `${orig.title} (copy)`,
+        title: `${orig.title} (bản sao)`,
         createdAt: now,
         updatedAt: now,
         lastOpenedAt: now,

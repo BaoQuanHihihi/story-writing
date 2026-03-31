@@ -38,14 +38,14 @@ export type ShelfSection =
   | 'trash'
 
 const NAV: { id: ShelfSection; label: string }[] = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'chapters', label: 'Chapters' },
-  { id: 'outline', label: 'Outline' },
-  { id: 'characters', label: 'Characters' },
-  { id: 'world', label: 'World' },
-  { id: 'timeline', label: 'Timeline' },
-  { id: 'notes', label: 'Notes' },
-  { id: 'trash', label: 'Trash' },
+  { id: 'overview', label: 'Tổng quan' },
+  { id: 'chapters', label: 'Chương' },
+  { id: 'outline', label: 'Dàn ý' },
+  { id: 'characters', label: 'Nhân vật' },
+  { id: 'world', label: 'Thế giới' },
+  { id: 'timeline', label: 'Trục thời gian' },
+  { id: 'notes', label: 'Ghi chú' },
+  { id: 'trash', label: 'Thùng rác' },
 ]
 
 export function LeftSidebar({
@@ -89,7 +89,7 @@ export function LeftSidebar({
       >
         <div className="flex h-full min-h-0 flex-col">
           <div className="border-b border-[var(--wn-border)] p-3">
-            <p className="text-xs font-semibold uppercase tracking-wide text-[var(--wn-muted)]">Shelf</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-[var(--wn-muted)]">Kệ sách</p>
             <nav className="mt-2 grid grid-cols-2 gap-1">
               {NAV.map((n) => (
                 <button
@@ -115,10 +115,10 @@ export function LeftSidebar({
             {section === 'chapters' ? (
               <div className="space-y-3">
                 <Button className="w-full" variant="secondary" type="button" onClick={() => void onAddChapter()}>
-                  New chapter
+                  Chương mới
                 </Button>
                 {chapters.length === 0 ? (
-                  <p className="text-sm text-[var(--wn-muted)]">No chapters yet.</p>
+                  <p className="text-sm text-[var(--wn-muted)]">Chưa có chương nào.</p>
                 ) : (
                   <ChapterList
                     chapters={chapters}
@@ -142,7 +142,7 @@ export function LeftSidebar({
       {mobileOpen ? (
         <button
           type="button"
-          aria-label="Close shelf"
+          aria-label="Đóng kệ"
           className="fixed inset-0 z-20 bg-black/30 lg:hidden"
           onClick={onCloseMobile}
         />
@@ -170,15 +170,15 @@ function Overview({
   }, [story.description, story.genre, story.id])
   return (
     <div className="space-y-3 text-sm">
-      <p className="text-xs text-[var(--wn-muted)]">Story</p>
+      <p className="text-xs text-[var(--wn-muted)]">Truyện</p>
       <p className="font-medium text-[var(--wn-text)]">{story.title}</p>
-      <label className="text-xs text-[var(--wn-muted)]">Description</label>
+      <label className="text-xs text-[var(--wn-muted)]">Mô tả</label>
       <Textarea
         value={desc}
         onChange={(e) => setDesc(e.target.value)}
         onBlur={() => void updateStoryMeta(story.id, { description: desc }).then(() => onSaved())}
       />
-      <label className="text-xs text-[var(--wn-muted)]">Genre</label>
+      <label className="text-xs text-[var(--wn-muted)]">Thể loại</label>
       <Input
         value={genre}
         onChange={(e) => setGenre(e.target.value)}
@@ -186,10 +186,10 @@ function Overview({
       />
       <div className="rounded-xl border border-[var(--wn-border)] bg-[var(--wn-surface-2)] p-3 text-xs text-[var(--wn-muted)]">
         <p>
-          <span className="font-medium text-[var(--wn-text)]">{chapterCount}</span> chapters ·{' '}
-          <span className="font-medium text-[var(--wn-text)]">{totalWords.toLocaleString()}</span> words
+          <span className="font-medium text-[var(--wn-text)]">{chapterCount}</span> chương ·{' '}
+          <span className="font-medium text-[var(--wn-text)]">{totalWords.toLocaleString('vi-VN')}</span> chữ
         </p>
-        <p className="mt-1">Last opened {formatRelative(story.lastOpenedAt)}</p>
+        <p className="mt-1">Mở lần cuối {formatRelative(story.lastOpenedAt)}</p>
       </div>
     </div>
   )
@@ -197,20 +197,20 @@ function Overview({
 
 function TrashPanel({ trash, onRefresh }: { trash: Chapter[]; onRefresh: () => Promise<void> | void }) {
   if (trash.length === 0) {
-    return <p className="text-sm text-[var(--wn-muted)]">Trash is empty.</p>
+    return <p className="text-sm text-[var(--wn-muted)]">Thùng rác trống.</p>
   }
   return (
     <ul className="space-y-2 text-sm">
       {trash.map((c) => (
         <li key={c.id} className="rounded-xl border border-[var(--wn-border)] p-2">
           <p className="truncate font-medium">{c.title}</p>
-          <p className="text-xs text-[var(--wn-muted)]">Deleted {c.deletedAt ? formatRelative(c.deletedAt) : ''}</p>
+          <p className="text-xs text-[var(--wn-muted)]">Đã xóa {c.deletedAt ? formatRelative(c.deletedAt) : ''}</p>
           <div className="mt-2 flex gap-2">
             <Button className="!px-2 !py-1 text-xs" variant="secondary" type="button" onClick={() => void restoreChapter(c.id).then(() => onRefresh())}>
-              Restore
+              Khôi phục
             </Button>
             <Button className="!px-2 !py-1 text-xs" variant="danger" type="button" onClick={() => void permanentlyDeleteChapter(c.id).then(() => onRefresh())}>
-              Delete forever
+              Xóa vĩnh viễn
             </Button>
           </div>
         </li>
@@ -241,7 +241,7 @@ function OutlineShelf({
     await upsertOutline({
       id: newId(),
       storyId,
-      title: 'Beat',
+      title: 'Mảng',
       summary: '',
       order,
       linkedChapterId: null,
@@ -253,15 +253,15 @@ function OutlineShelf({
   return (
     <div className="space-y-3">
       <Button className="w-full" variant="secondary" type="button" onClick={() => void add()}>
-        Add beat
+        Thêm mảng dàn ý
       </Button>
-      {rows.length === 0 ? <p className="text-sm text-[var(--wn-muted)]">No outline yet.</p> : null}
+      {rows.length === 0 ? <p className="text-sm text-[var(--wn-muted)]">Chưa có dàn ý.</p> : null}
       <ul className="space-y-2">
         {rows.map((r) => (
           <li key={r.id} className="rounded-xl border border-[var(--wn-border)] p-2">
             <Input
               value={r.title}
-              aria-label="Outline title"
+              aria-label="Tiêu đề mảng dàn ý"
               onChange={(e) => setRows((prev) => prev.map((x) => (x.id === r.id ? { ...x, title: e.target.value } : x)))}
               onBlur={async () => {
                 const cur = latestRows.current.find((x) => x.id === r.id)
@@ -280,7 +280,7 @@ function OutlineShelf({
               }}
             />
             <div className="mt-2 flex items-center gap-2">
-              <label className="text-[11px] text-[var(--wn-muted)]">Linked chapter</label>
+              <label className="text-[11px] text-[var(--wn-muted)]">Liên kết chương</label>
               <select
                 className="flex-1 rounded-lg border border-[var(--wn-border)] bg-[var(--wn-surface)] px-2 py-1 text-xs"
                 value={r.linkedChapterId ?? ''}
@@ -292,7 +292,7 @@ function OutlineShelf({
                   await onRefresh()
                 }}
               >
-                <option value="">None</option>
+                <option value="">Không</option>
                 {chapters.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.title}
@@ -306,7 +306,7 @@ function OutlineShelf({
               type="button"
               onClick={() => void deleteOutline(r.id).then(reload).then(() => onRefresh())}
             >
-              Remove
+              Xóa
             </Button>
           </li>
         ))}
@@ -336,7 +336,7 @@ function CharactersShelf({
     await upsertCharacter({
       id: newId(),
       storyId,
-      name: 'New character',
+      name: 'Nhân vật mới',
       role: '',
       description: '',
       personality: '',
@@ -360,9 +360,9 @@ function CharactersShelf({
   return (
     <div className="space-y-3">
       <Button className="w-full" variant="secondary" type="button" onClick={() => void add()}>
-        Add character
+        Thêm nhân vật
       </Button>
-      {rows.length === 0 ? <p className="text-sm text-[var(--wn-muted)]">No characters yet.</p> : null}
+      {rows.length === 0 ? <p className="text-sm text-[var(--wn-muted)]">Chưa có nhân vật.</p> : null}
       <ul className="space-y-3">
         {rows.map((r) => (
           <li key={r.id} className="rounded-xl border border-[var(--wn-border)] p-2 text-xs">
@@ -378,7 +378,7 @@ function CharactersShelf({
             <Input
               className="mt-2"
               value={r.role}
-              placeholder="Role"
+              placeholder="Vai trò"
               onChange={(e) => setRows((p) => p.map((x) => (x.id === r.id ? { ...x, role: e.target.value } : x)))}
               onBlur={async () => {
                 const cur = latest.current.find((x) => x.id === r.id)
@@ -389,7 +389,7 @@ function CharactersShelf({
             <Textarea
               className="mt-2 min-h-[80px]"
               value={r.description}
-              placeholder="Description"
+              placeholder="Mô tả"
               onChange={(e) => setRows((p) => p.map((x) => (x.id === r.id ? { ...x, description: e.target.value } : x)))}
               onBlur={async () => {
                 const cur = latest.current.find((x) => x.id === r.id)
@@ -397,7 +397,7 @@ function CharactersShelf({
                 await onRefresh()
               }}
             />
-            <p className="mt-2 text-[11px] font-medium text-[var(--wn-muted)]">Appearances</p>
+            <p className="mt-2 text-[11px] font-medium text-[var(--wn-muted)]">Xuất hiện trong chương</p>
             <div className="mt-1 flex flex-wrap gap-1">
               {chapters.map((ch) => {
                 const on = r.linkedChapterIds.includes(ch.id)
@@ -417,7 +417,7 @@ function CharactersShelf({
               })}
             </div>
             <Button className="mt-2 !px-2 !py-1" variant="ghost" type="button" onClick={() => void deleteCharacter(r.id).then(reload).then(() => onRefresh())}>
-              Remove
+              Xóa
             </Button>
           </li>
         ))}
@@ -441,7 +441,7 @@ function WorldShelf({ storyId, onRefresh }: { storyId: string; onRefresh: () => 
     await upsertWorld({
       id: newId(),
       storyId,
-      title: 'Lore note',
+      title: 'Mục thế giới',
       content: '',
       order,
       updatedAt: now(),
@@ -453,9 +453,9 @@ function WorldShelf({ storyId, onRefresh }: { storyId: string; onRefresh: () => 
   return (
     <div className="space-y-3">
       <Button className="w-full" variant="secondary" type="button" onClick={() => void add()}>
-        Add entry
+        Thêm mục
       </Button>
-      {rows.length === 0 ? <p className="text-sm text-[var(--wn-muted)]">No world notes yet.</p> : null}
+      {rows.length === 0 ? <p className="text-sm text-[var(--wn-muted)]">Chưa có ghi chép thế giới.</p> : null}
       <ul className="space-y-2">
         {rows.map((r) => (
           <li key={r.id} className="rounded-xl border border-[var(--wn-border)] p-2">
@@ -479,7 +479,7 @@ function WorldShelf({ storyId, onRefresh }: { storyId: string; onRefresh: () => 
               }}
             />
             <Button className="mt-2 !px-2 !py-1 text-xs" variant="ghost" type="button" onClick={() => void deleteWorld(r.id).then(reload).then(() => onRefresh())}>
-              Remove
+              Xóa
             </Button>
           </li>
         ))}
@@ -510,7 +510,7 @@ function TimelineShelf({
     await upsertTimeline({
       id: newId(),
       storyId,
-      title: 'Event',
+      title: 'Sự kiện',
       description: '',
       relatedChapterId: null,
       order,
@@ -523,15 +523,15 @@ function TimelineShelf({
   return (
     <div className="space-y-3">
       <Button className="w-full" variant="secondary" type="button" onClick={() => void add()}>
-        Add event
+        Thêm sự kiện
       </Button>
-      {rows.length === 0 ? <p className="text-sm text-[var(--wn-muted)]">No timeline events yet.</p> : null}
+      {rows.length === 0 ? <p className="text-sm text-[var(--wn-muted)]">Chưa có sự kiện trên trục thời gian.</p> : null}
       <ul className="space-y-2">
         {rows.map((r) => (
           <li key={r.id} className="rounded-xl border border-[var(--wn-border)] p-2 text-xs">
             <Input
               value={r.dateLabel}
-              placeholder="When"
+              placeholder="Thời điểm"
               onChange={(e) => setRows((p) => p.map((x) => (x.id === r.id ? { ...x, dateLabel: e.target.value } : x)))}
               onBlur={async () => {
                 const cur = latest.current.find((x) => x.id === r.id)
@@ -559,7 +559,7 @@ function TimelineShelf({
                 await onRefresh()
               }}
             />
-            <label className="mt-2 block text-[11px] text-[var(--wn-muted)]">Related chapter</label>
+            <label className="mt-2 block text-[11px] text-[var(--wn-muted)]">Chương liên quan</label>
             <select
               className="mt-1 w-full rounded-lg border border-[var(--wn-border)] bg-[var(--wn-surface)] px-2 py-1"
               value={r.relatedChapterId ?? ''}
@@ -570,7 +570,7 @@ function TimelineShelf({
                 await onRefresh()
               }}
             >
-              <option value="">Story-wide</option>
+              <option value="">Cả truyện</option>
               {chapters.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.title}
@@ -578,7 +578,7 @@ function TimelineShelf({
               ))}
             </select>
             <Button className="mt-2 !px-2 !py-1" variant="ghost" type="button" onClick={() => void deleteTimeline(r.id).then(reload).then(() => onRefresh())}>
-              Remove
+              Xóa
             </Button>
           </li>
         ))}
@@ -602,7 +602,7 @@ function NotesShelf({ storyId, onRefresh }: { storyId: string; onRefresh: () => 
     await upsertNote({
       id: newId(),
       storyId,
-      title: 'Note',
+      title: 'Ghi chú',
       content: '',
       order,
       updatedAt: now(),
@@ -614,9 +614,9 @@ function NotesShelf({ storyId, onRefresh }: { storyId: string; onRefresh: () => 
   return (
     <div className="space-y-3">
       <Button className="w-full" variant="secondary" type="button" onClick={() => void add()}>
-        Add note
+        Thêm ghi chú
       </Button>
-      {rows.length === 0 ? <p className="text-sm text-[var(--wn-muted)]">No story notes yet.</p> : null}
+      {rows.length === 0 ? <p className="text-sm text-[var(--wn-muted)]">Chưa có ghi chú truyện.</p> : null}
       <ul className="space-y-2">
         {rows.map((r) => (
           <li key={r.id} className="rounded-xl border border-[var(--wn-border)] p-2">
@@ -640,7 +640,7 @@ function NotesShelf({ storyId, onRefresh }: { storyId: string; onRefresh: () => 
               }}
             />
             <Button className="mt-2 !px-2 !py-1 text-xs" variant="ghost" type="button" onClick={() => void deleteNote(r.id).then(reload).then(() => onRefresh())}>
-              Remove
+              Xóa
             </Button>
           </li>
         ))}

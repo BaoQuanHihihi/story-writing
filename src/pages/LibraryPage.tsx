@@ -87,11 +87,11 @@ export function LibraryPage() {
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Button variant="secondary" onClick={() => setSettingsOpen(true)} aria-label="Open settings">
-                Settings
+              <Button variant="secondary" onClick={() => setSettingsOpen(true)} aria-label="Mở cài đặt">
+                Cài đặt
               </Button>
               <Button variant="secondary" onClick={() => importRef.current?.click()}>
-                Import backup
+                Nhập sao lưu
               </Button>
               <input
                 ref={importRef}
@@ -119,17 +119,17 @@ export function LibraryPage() {
                       await refresh()
                     }
                   } catch {
-                    alert('Could not read backup file.')
+                    alert('Không đọc được file sao lưu.')
                   }
                 }}
               />
-              <Button onClick={() => setCreateOpen(true)}>New story</Button>
+              <Button onClick={() => setCreateOpen(true)}>Truyện mới</Button>
             </div>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <label className="sr-only" htmlFor="story-search">
-              Search stories
+              Tìm truyện
             </label>
             <Input
               id="story-search"
@@ -145,11 +145,10 @@ export function LibraryPage() {
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
         {showOnboarding ? (
           <div className="mb-8 rounded-2xl border border-dashed border-[var(--wn-border)] bg-[var(--wn-accent-soft)] p-4 text-sm text-[var(--wn-text)]">
-            <p className="font-medium">Welcome</p>
+            <p className="font-medium">Chào bạn</p>
             <p className="mt-1 text-[var(--wn-muted)]">
-              Your manuscripts never leave this browser. Use Export occasionally for peace of mind. In a story,
-              press ⌘K / Ctrl+K to search chapters, ⌘⇧N / Ctrl+Shift+N for a new chapter, and ⌘. / Ctrl+. for Focus
-              mode.
+              Bản thảo chỉ nằm trên trình duyệt này. Thỉnh thoảng hãy xuất sao lưu cho yên tâm. Trong truyện: ⌘K / Ctrl+K
+              để tìm chương, ⌘⇧N / Ctrl+Shift+N thêm chương mới, ⌘. / Ctrl+. chế độ tập trung.
             </p>
             <button
               type="button"
@@ -159,7 +158,7 @@ export function LibraryPage() {
                 setShowOnboarding(false)
               }}
             >
-              Dismiss
+              Ẩn
             </button>
           </div>
         ) : null}
@@ -167,12 +166,12 @@ export function LibraryPage() {
         {continueTarget?.chapterId ? (
           <section className="mb-10 rounded-2xl border border-[var(--wn-border)] bg-[var(--wn-surface)] p-5 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--wn-muted)]">
-              Continue writing
+              Viết tiếp
             </p>
             <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="font-serif text-xl text-[var(--wn-text)]">{continueStoryTitle ?? 'Your story'}</p>
-                <p className="text-sm text-[var(--wn-muted)]">Most recent desk session</p>
+                <p className="font-serif text-xl text-[var(--wn-text)]">{continueStoryTitle ?? 'Truyện của bạn'}</p>
+                <p className="text-sm text-[var(--wn-muted)]">Phiên làm việc gần nhất</p>
               </div>
               <Button
                 onClick={() => {
@@ -183,7 +182,7 @@ export function LibraryPage() {
                   navigate(`/story/${continueTarget.storyId}?chapter=${continueTarget.chapterId}`)
                 }}
               >
-                Open last chapter
+                Mở chương trước
               </Button>
             </div>
           </section>
@@ -191,28 +190,28 @@ export function LibraryPage() {
 
         {items.length === 0 ? (
           <div className="mx-auto max-w-lg rounded-3xl border border-[var(--wn-border)] bg-[var(--wn-surface)] px-8 py-14 text-center shadow-[var(--wn-shadow)]">
-            <p className="font-serif text-2xl text-[var(--wn-text)]">Your desk is clear</p>
+            <p className="font-serif text-2xl text-[var(--wn-text)]">Bàn viết đang trống</p>
             <p className="mt-3 text-sm text-[var(--wn-muted)]">
-              Start a story, or import a backup from another device. Everything stays in this browser until you
-              export it.
+              Tạo truyện mới hoặc nhập sao lưu từ thiết bị khác. Mọi thứ chỉ ở trên trình duyệt này cho đến khi bạn
+              xuất ra ngoài.
             </p>
             <Button className="mt-6" onClick={() => setCreateOpen(true)}>
-              Create your first story
+              Tạo truyện đầu tiên
             </Button>
           </div>
         ) : (
           <section>
             <div className="mb-4 flex items-center justify-between gap-3">
-              <h2 className="text-sm font-semibold text-[var(--wn-text)]">Library</h2>
+              <h2 className="text-sm font-semibold text-[var(--wn-text)]">Thư viện</h2>
               <Button
                 variant="ghost"
                 className="!px-2 !py-1 text-xs"
                 onClick={async () => {
                   const data = await exportAllStories()
-                  downloadJson('writenest-backup.json', data)
+                  downloadJson('sao-luu-writenest.json', data)
                 }}
               >
-                Export all stories
+                Xuất tất cả truyện
               </Button>
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -243,14 +242,14 @@ export function LibraryPage() {
               ))}
             </div>
             {filtered.length === 0 ? (
-              <p className="mt-6 text-center text-sm text-[var(--wn-muted)]">No stories match your search.</p>
+              <p className="mt-6 text-center text-sm text-[var(--wn-muted)]">Không có truyện khớp tìm kiếm.</p>
             ) : null}
           </section>
         )}
       </main>
 
       <footer className="mx-auto max-w-6xl px-4 pb-8 text-center text-xs text-[var(--wn-muted)] sm:px-6">
-        Autosave and backups keep your work safe on this device.
+        Tự động lưu và sao lưu giữ bản thảo an toàn trên thiết bị này.
       </footer>
 
       <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} />
@@ -273,13 +272,13 @@ export function LibraryPage() {
 
       <Modal
         open={!!importConfirm}
-        title="Import backup"
-        ariaDescription="Some stories in this file already exist. Choose how to merge."
+        title="Nhập sao lưu"
+        ariaDescription="Một số truyện trong file đã tồn tại. Chọn cách gộp dữ liệu."
         onClose={() => setImportConfirm(null)}
         footer={
           <>
             <Button variant="secondary" onClick={() => setImportConfirm(null)}>
-              Cancel
+              Hủy
             </Button>
             <Button
               variant="secondary"
@@ -290,26 +289,26 @@ export function LibraryPage() {
                 await refresh()
               }}
             >
-              Skip duplicates
+              Bỏ qua trùng ID
             </Button>
             <Button
               variant="danger"
               onClick={async () => {
                 if (!importConfirm) return
-                if (!confirm('Overwrite existing entries with the same IDs?')) return
+                if (!confirm('Ghi đè các mục đã có cùng ID?')) return
                 await importBackup(importConfirm.data, 'overwrite')
                 setImportConfirm(null)
                 await refresh()
               }}
             >
-              Overwrite duplicates
+              Ghi đè trùng ID
             </Button>
           </>
         }
       >
         <p className="text-sm text-[var(--wn-muted)]">
-          This backup contains stories that share IDs with work already in your library. You can skip importing
-          those entries, or overwrite them with the backup version.
+          File sao lưu chứa truyện trùng ID với thư viện hiện tại. Bạn có thể bỏ qua các mục đó hoặc ghi đè bằng bản
+          trong file.
         </p>
       </Modal>
     </div>
@@ -320,7 +319,7 @@ function slugify(s: string) {
   return s
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '') || 'story'
+    .replace(/(^-|-$)/g, '') || 'truyen'
 }
 
 function CreateStoryModal({
@@ -336,7 +335,7 @@ function CreateStoryModal({
 }) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [genre, setGenre] = useState('General')
+  const [genre, setGenre] = useState('Chung')
   const [status, setStatus] = useState<StoryStatus>('draft')
   const [cover, setCover] = useState<string | null>('#b45309')
 
@@ -344,7 +343,7 @@ function CreateStoryModal({
     if (open) {
       setTitle('')
       setDescription('')
-      setGenre('General')
+      setGenre('Chung')
       setStatus('draft')
       setCover('#b45309')
     }
@@ -354,16 +353,16 @@ function CreateStoryModal({
     <Modal
       open={open}
       onClose={onClose}
-      title="New story"
+      title="Truyện mới"
       footer={
         <>
           <Button variant="secondary" onClick={onClose}>
-            Cancel
+            Hủy
           </Button>
           <Button
             onClick={async () => {
               const { story, chapter } = await createStory({
-                title: title || 'Untitled story',
+                title: title || 'Truyện chưa đặt tên',
                 description,
                 genre,
                 status,
@@ -374,40 +373,44 @@ function CreateStoryModal({
               navigate(`/story/${story.id}?chapter=${chapter.id}`)
             }}
           >
-            Create & open
+            Tạo và mở
           </Button>
         </>
       }
     >
       <div className="space-y-3">
-        <Field label="Title">
-          <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Working title" />
+        <Field label="Tiêu đề">
+          <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Tên làm việc" />
         </Field>
-        <Field label="Description">
-          <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="A single calm line about what this is." />
+        <Field label="Mô tả">
+          <Textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Một dòng giới thiệu ngắn về truyện."
+          />
         </Field>
-        <Field label="Genre / shelf">
+        <Field label="Thể loại / kệ">
           <Input value={genre} onChange={(e) => setGenre(e.target.value)} />
         </Field>
-        <Field label="Status">
+        <Field label="Trạng thái">
           <select
             className="w-full rounded-xl border border-[var(--wn-border)] bg-[var(--wn-surface)] px-3 py-2 text-sm"
             value={status}
             onChange={(e) => setStatus(e.target.value as StoryStatus)}
           >
-            <option value="draft">Draft</option>
-            <option value="ongoing">Ongoing</option>
-            <option value="completed">Completed</option>
-            <option value="paused">Paused</option>
+            <option value="draft">Bản nháp</option>
+            <option value="ongoing">Đang viết</option>
+            <option value="completed">Hoàn thành</option>
+            <option value="paused">Tạm dừng</option>
           </select>
         </Field>
-        <Field label="Accent">
+        <Field label="Màu nhấn">
           <div className="flex flex-wrap gap-2">
             {['#b45309', '#0f766e', '#4338ca', '#be123c', '#57534e'].map((c) => (
               <button
                 key={c}
                 type="button"
-                aria-label={`Accent color ${c}`}
+                aria-label={`Màu nhấn ${c}`}
                 className={cn(
                   'h-8 w-8 rounded-full border-2 border-transparent shadow-sm',
                   cover === c && 'ring-2 ring-[var(--wn-accent)] ring-offset-2 ring-offset-[var(--wn-surface)]',
@@ -417,7 +420,7 @@ function CreateStoryModal({
               />
             ))}
             <button type="button" className="text-xs text-[var(--wn-muted)] underline" onClick={() => setCover(null)}>
-              None
+              Không
             </button>
           </div>
         </Field>
@@ -459,11 +462,11 @@ function RenameStoryModal({
     <Modal
       open={open}
       onClose={onClose}
-      title="Rename story"
+      title="Đổi tên truyện"
       footer={
         <>
           <Button variant="secondary" onClick={onClose}>
-            Cancel
+            Hủy
           </Button>
           <Button
             onClick={async () => {
@@ -472,7 +475,7 @@ function RenameStoryModal({
               onClose()
             }}
           >
-            Save
+            Lưu
           </Button>
         </>
       }
@@ -506,12 +509,12 @@ function DeleteStoryModal({
     <Modal
       open={open}
       onClose={onClose}
-      title="Delete story?"
-      ariaDescription={`This removes “${title ?? 'this story'}” and all chapters from this device.`}
+      title="Xóa truyện?"
+      ariaDescription={`Thao tác này xóa «${title ?? 'truyện này'}» và mọi chương khỏi thiết bị.`}
       footer={
         <>
           <Button variant="secondary" onClick={onClose}>
-            Cancel
+            Hủy
           </Button>
           <Button
             variant="danger"
@@ -521,13 +524,13 @@ function DeleteStoryModal({
               onClose()
             }}
           >
-            Delete forever
+            Xóa vĩnh viễn
           </Button>
         </>
       }
     >
       <p className="text-sm text-[var(--wn-muted)]">
-        Export first if you might need a copy. This cannot be undone here.
+        Hãy xuất sao lưu trước nếu bạn cần bản sao. Thao tác này không thể hoàn tác trên ứng dụng.
       </p>
     </Modal>
   )

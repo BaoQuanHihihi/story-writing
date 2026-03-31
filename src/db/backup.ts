@@ -25,13 +25,13 @@ function isSnapshotType(x: unknown): boolean {
 }
 
 export function validateBackup(input: unknown): { ok: true; data: BackupPayload } | { ok: false; error: string } {
-  if (!isRecord(input)) return { ok: false, error: 'Backup must be a JSON object.' }
+  if (!isRecord(input)) return { ok: false, error: 'Bản sao lưu phải là một đối tượng JSON.' }
   const schemaVersion = input.schemaVersion
   if (typeof schemaVersion !== 'number' || schemaVersion < 1) {
-    return { ok: false, error: 'Missing or invalid schemaVersion.' }
+    return { ok: false, error: 'Thiếu hoặc schemaVersion không hợp lệ.' }
   }
   const exportedAt = input.exportedAt
-  if (typeof exportedAt !== 'string') return { ok: false, error: 'Missing exportedAt.' }
+  if (typeof exportedAt !== 'string') return { ok: false, error: 'Thiếu exportedAt.' }
 
   const arrays: (keyof BackupPayload)[] = [
     'stories',
@@ -44,25 +44,25 @@ export function validateBackup(input: unknown): { ok: true; data: BackupPayload 
     'snapshots',
   ]
   for (const key of arrays) {
-    if (!Array.isArray(input[key])) return { ok: false, error: `Missing array: ${key}` }
+    if (!Array.isArray(input[key])) return { ok: false, error: `Thiếu mảng: ${key}` }
   }
 
   for (const s of input.stories as unknown[]) {
-    if (!isRecord(s)) return { ok: false, error: 'Invalid story entry.' }
-    if (typeof s.id !== 'string' || typeof s.title !== 'string') return { ok: false, error: 'Invalid story shape.' }
-    if (!isStoryStatus(s.status)) return { ok: false, error: 'Invalid story status.' }
+    if (!isRecord(s)) return { ok: false, error: 'Mục truyện không hợp lệ.' }
+    if (typeof s.id !== 'string' || typeof s.title !== 'string') return { ok: false, error: 'Cấu trúc truyện không hợp lệ.' }
+    if (!isStoryStatus(s.status)) return { ok: false, error: 'Trạng thái truyện không hợp lệ.' }
   }
   for (const c of input.chapters as unknown[]) {
-    if (!isRecord(c)) return { ok: false, error: 'Invalid chapter entry.' }
+    if (!isRecord(c)) return { ok: false, error: 'Mục chương không hợp lệ.' }
     if (typeof c.id !== 'string' || typeof c.storyId !== 'string' || typeof c.title !== 'string') {
-      return { ok: false, error: 'Invalid chapter shape.' }
+      return { ok: false, error: 'Cấu trúc chương không hợp lệ.' }
     }
-    if (!isChapterStatus(c.status)) return { ok: false, error: 'Invalid chapter status.' }
-    if (typeof c.order !== 'number') return { ok: false, error: 'Invalid chapter order.' }
+    if (!isChapterStatus(c.status)) return { ok: false, error: 'Trạng thái chương không hợp lệ.' }
+    if (typeof c.order !== 'number') return { ok: false, error: 'Thứ tự chương không hợp lệ.' }
   }
   for (const sn of input.snapshots as unknown[]) {
-    if (!isRecord(sn)) return { ok: false, error: 'Invalid snapshot entry.' }
-    if (!isSnapshotType(sn.type)) return { ok: false, error: 'Invalid snapshot type.' }
+    if (!isRecord(sn)) return { ok: false, error: 'Mục bản chụp không hợp lệ.' }
+    if (!isSnapshotType(sn.type)) return { ok: false, error: 'Loại bản chụp không hợp lệ.' }
   }
 
   return {

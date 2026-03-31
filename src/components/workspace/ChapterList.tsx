@@ -13,10 +13,10 @@ import { countWords } from '../../lib/words'
 import { cn } from '../../lib/cn'
 
 const chStatusLabel: Record<ChapterStatus, string> = {
-  draft: 'Draft',
-  in_progress: 'In progress',
-  complete: 'Complete',
-  needs_revision: 'Needs revision',
+  draft: 'Nháp',
+  in_progress: 'Đang viết',
+  complete: 'Hoàn thành',
+  needs_revision: 'Cần sửa',
 }
 
 function ChapterRow({
@@ -45,7 +45,7 @@ function ChapterRow({
         <button
           type="button"
           className="cursor-grab px-1.5 text-[var(--wn-muted)] touch-none hover:text-[var(--wn-text)]"
-          aria-label={`Reorder ${chapter.title}`}
+          aria-label={`Sắp xếp «${chapter.title}»`}
           {...attributes}
           {...listeners}
         >
@@ -58,14 +58,14 @@ function ChapterRow({
         >
           <p className="truncate text-sm font-medium text-[var(--wn-text)]">{chapter.title}</p>
           <p className="mt-0.5 text-[11px] text-[var(--wn-muted)]">
-            {wc.toLocaleString()} w · {chStatusLabel[chapter.status]}
+            {wc.toLocaleString('vi-VN')} chữ · {chStatusLabel[chapter.status]}
           </p>
         </button>
         {onTrash ? (
           <button
             type="button"
             className="px-2 text-[var(--wn-muted)] hover:text-red-600"
-            aria-label={`Move ${chapter.title} to trash`}
+            aria-label={`Chuyển «${chapter.title}» vào thùng rác`}
             onClick={(e) => {
               e.stopPropagation()
               onTrash()

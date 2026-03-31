@@ -19,14 +19,14 @@ export function SearchChaptersModal({
   const list = useMemo(() => filterChaptersByQuery(chapters, q), [chapters, q])
 
   return (
-    <Modal open={open} onClose={onClose} title="Find chapter" className="max-w-lg">
+    <Modal open={open} onClose={onClose} title="Tìm chương" className="max-w-lg">
       <label className="sr-only" htmlFor="ch-search">
-        Search chapters
+        Tìm chương
       </label>
       <Input
         id="ch-search"
         autoFocus
-        placeholder="Search titles or chapter text…"
+        placeholder="Tìm theo tiêu đề hoặc nội dung chương…"
         value={q}
         onChange={(e) => setQ(e.target.value)}
       />
@@ -48,7 +48,7 @@ export function SearchChaptersModal({
           </li>
         ))}
       </ul>
-      {list.length === 0 ? <p className="mt-2 text-sm text-[var(--wn-muted)]">No matches.</p> : null}
+      {list.length === 0 ? <p className="mt-2 text-sm text-[var(--wn-muted)]">Không có kết quả.</p> : null}
     </Modal>
   )
 }
