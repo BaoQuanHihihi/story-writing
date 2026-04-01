@@ -15,6 +15,7 @@ import { RightPanel, type RightTab } from '../components/workspace/RightPanel'
 import { SearchChaptersModal } from '../components/workspace/SearchChaptersModal'
 import { SettingsModal } from '../components/settings/SettingsModal'
 import { Button } from '../components/ui/Button'
+import { ConfirmDialog } from '../components/ui/ConfirmDialog'
 import { cn } from '../lib/cn'
 
 function downloadJson(filename: string, data: unknown) {
@@ -46,6 +47,7 @@ export function WorkspacePage() {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [helpOpen, setHelpOpen] = useState(false)
   const [ready, setReady] = useState(false)
+  const [trashChapterConfirm, setTrashChapterConfirm] = useState<{ id: string; title: string } | null>(null)
 
   const chapterIdParam = searchParams.get('chapter')
   const activeChapterId = chapterIdParam ?? chapters[0]?.id ?? null
@@ -119,12 +121,19 @@ export function WorkspacePage() {
     setSection('chapters')
   }, [chapters.length, reload, selectChapter, storyId])
 
-  const onTrashChapter = async (id: string) => {
-    if (!confirm('Chuyển chương này vào thùng rác?')) return
+  const onTrashChapter = (id: string) => {
+    const ch = chapters.find((c) => c.id === id)
+    setTrashChapterConfirm({ id, title: ch?.title?.trim() || 'Chương này' })
+  }
+
+  const confirmTrashChapter = async () => {
+    if (!trashChapterConfirm) return
+    const { id } = trashChapterConfirm
+    setTrashChapterConfirm(null)
     await editorRef.current?.saveNow()
+    const next = chapters.filter((c) => c.id !== id).sort((a, b) => a.order - b.order)[0]
     await softDeleteChapter(id)
     await reload()
-    const next = chapters.filter((c) => c.id !== id).sort((a, b) => a.order - b.order)[0]
     if (next) await selectChapter(next.id)
     else setSearchParams({}, { replace: true })
   }
@@ -301,6 +310,17 @@ export function WorkspacePage() {
       />
 
       <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+
+      <ConfirmDialog
+        open={!!trashChapterConfirm}
+        title="Chuyển vào thùng rác?"
+        message={`Chương «${trashChapterConfirm?.title ?? ''}» sẽ được lưu (nếu có thay đổi) rồi chuyển vào thùng rác. Sau này bạn có thể khôi phục từ kệ bên trái.`}
+        cancelLabel="Giữ lại"
+        confirmLabel="Chuyển vào thùng rác"
+        variant="danger"
+        onCancel={() => setTrashChapterConfirm(null)}
+        onConfirm={() => void confirmTrashChapter()}
+      />
 
       {helpOpen ? (
         <div className="fixed bottom-4 right-4 z-40 max-w-sm rounded-2xl border border-[var(--wn-border)] bg-[var(--wn-surface)] p-4 text-xs shadow-lg">

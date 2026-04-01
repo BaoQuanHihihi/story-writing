@@ -34,7 +34,7 @@ export function SettingsModal({ open, onClose }: { open: boolean; onClose: () =>
       open={open}
       onClose={onClose}
       title="Cài đặt"
-      ariaDescription="Giao diện, trình soạn, tự động lưu và tùy chọn viết. Lưu cục bộ trên thiết bị này."
+      ariaDescription="Giao diện, trình soạn, tự động lưu và tùy chọn viết. Lưu cục bộ trên thiết bị của chính bạn."
       className="max-w-xl"
       footer={
         <>
@@ -117,7 +117,7 @@ export function SettingsModal({ open, onClose }: { open: boolean; onClose: () =>
           </select>
         </Field>
 
-        <Field label="Mục tiêu chữ mỗi ngày">
+        <Field label="Mục tiêu chữ mỗi ngày (cấy ni hơi xàm nên thích thì thêm)">
           <input
             type="number"
             min={0}
