@@ -180,7 +180,7 @@ export function WorkspacePage() {
   if (!story) {
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center gap-3 p-6 text-sm text-[var(--wn-muted)]">
-        <p>Không tìm thấy truyện đó trên thiết bị này.</p>
+        <p>Không tìm thấy truyện đó trên thiết bị của bạn.</p>
         <Link className="text-[var(--wn-accent)] underline" to="/">
           Về thư viện
         </Link>

@@ -34,7 +34,7 @@ export function Modal({
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 sm:p-6">
       <button
         type="button"
-        className="absolute inset-0 cursor-default bg-transparent backdrop-blur-md"
+        className="absolute inset-0 bg-transparent backdrop-blur-md"
         aria-label="Đóng hộp thoại"
         onClick={onClose}
       />

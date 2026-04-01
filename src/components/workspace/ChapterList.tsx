@@ -44,7 +44,7 @@ function ChapterRow({
       <div className="flex items-stretch gap-1">
         <button
           type="button"
-          className="cursor-grab px-1.5 text-[var(--wn-muted)] touch-none hover:text-[var(--wn-text)]"
+          className="!cursor-grab active:!cursor-grabbing px-1.5 text-[var(--wn-muted)] touch-none hover:text-[var(--wn-text)]"
           aria-label={`Sắp xếp «${chapter.title}»`}
           {...attributes}
           {...listeners}

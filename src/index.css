@@ -37,6 +37,15 @@ html.dark {
   color-scheme: dark;
 }
 
+@layer base {
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
 body {
   margin: 0;
   min-height: 100dvh;

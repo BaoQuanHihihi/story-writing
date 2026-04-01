@@ -249,7 +249,7 @@ export function LibraryPage() {
       </main>
 
       <footer className="mx-auto max-w-6xl px-4 pb-8 text-center text-xs text-[var(--wn-muted)] sm:px-6">
-        Tự động lưu và sao lưu giữ bản thảo an toàn trên thiết bị này.
+        Tự động lưu và sao lưu giữ bản thảo an toàn trên chính thiết bị của bạn.
       </footer>
 
       <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} />
